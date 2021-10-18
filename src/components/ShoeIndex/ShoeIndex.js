@@ -9,21 +9,29 @@ import Spacer from '../Spacer';
 import ShoeSidebar from '../ShoeSidebar';
 import ShoeGrid from '../ShoeGrid';
 
+const ShoeBreadcrumbs = () => {
+  return (
+    <Breadcrumbs>
+      <Breadcrumbs.Crumb href="/">Home</Breadcrumbs.Crumb>
+      <Breadcrumbs.Crumb href="/sale">Sale</Breadcrumbs.Crumb>
+      <Breadcrumbs.Crumb href="/sale/shoes">
+        Shoes
+      </Breadcrumbs.Crumb>
+    </Breadcrumbs>
+  );
+}
+
 const ShoeIndex = ({ sortId, setSortId }) => {
   return (
     <Wrapper>
       <MainColumn>
         <Header>
-          <TitleWrapper>
-            <Breadcrumbs>
-              <Breadcrumbs.Crumb href="/">Home</Breadcrumbs.Crumb>
-              <Breadcrumbs.Crumb href="/sale">Sale</Breadcrumbs.Crumb>
-              <Breadcrumbs.Crumb href="/sale/shoes">
-                Shoes
-              </Breadcrumbs.Crumb>
-            </Breadcrumbs>
+          <div>
+            <MobileBreadcrumb>
+              <ShoeBreadcrumbs />
+            </MobileBreadcrumb>
             <Title>Running</Title>
-          </TitleWrapper>
+          </div>
           <Select
             label="Sort"
             value={sortId}
@@ -37,13 +45,9 @@ const ShoeIndex = ({ sortId, setSortId }) => {
         <ShoeGrid />
       </MainColumn>
       <LeftColumn>
-        <Breadcrumbs>
-          <Breadcrumbs.Crumb href="/">Home</Breadcrumbs.Crumb>
-          <Breadcrumbs.Crumb href="/sale">Sale</Breadcrumbs.Crumb>
-          <Breadcrumbs.Crumb href="/sale/shoes">
-            Shoes
-          </Breadcrumbs.Crumb>
-        </Breadcrumbs>
+        <DesktopBreadcrumb>
+          <ShoeBreadcrumbs />
+        </DesktopBreadcrumb>
         <Spacer size={42} />
         <ShoeSidebar />
       </LeftColumn>
@@ -81,8 +85,17 @@ const Title = styled.h2`
   font-weight: ${WEIGHTS.medium};
 `;
 
-export const TitleWrapper = styled.div`
-  /* styles */
+const DesktopBreadcrumb = styled.div`
+  @media (max-width: ${p => p.theme.tablet}) {
+    display: none;
+  }
+`;
+
+const MobileBreadcrumb = styled.div`
+  display: none;
+  @media (max-width: ${p => p.theme.tablet}) {
+    display: revert;
+  }
 `;
 
 export default ShoeIndex;
